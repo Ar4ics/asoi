@@ -26,12 +26,12 @@ vector<Passenger> readData(string fileName);
 double Distance(Passenger &a, Passenger &b)
 {
     double d = 0;
-    d += abs(a.Pclass - b.Pclass);
+    d += 5.0 * abs(a.Pclass - b.Pclass);
     d += a.Sex != b.Sex;
-    d += fabs(a.Age - b.Age);
-    d += abs(a.SibSp - b.SibSp);
-    d += abs(a.Parch - b.Parch);
-    d += fabs(a.Fare - b.Fare);
+    d += 5.0 * fabs(a.Age - b.Age);
+    d += 5.0 * abs(a.SibSp - b.SibSp);
+    d += 5.0 * abs(a.Parch - b.Parch);
+    d += 5.0 * fabs(a.Fare - b.Fare);
     d += a.Embarked != b.Embarked;
     return d;
 }
@@ -51,7 +51,7 @@ int main()
     {
         //выполняем предсказание для i-того пассажира
         for(int j = 0; j < data.size(); j++)
-            if (i != j) dists[j] = make_pair<double,int>(Distance(data[i], data[j]), data[j].Survived);
+            if (i != j) dists[j] = make_pair(Distance(data[i], data[j]), data[j].Survived);
             else dists[j] = pair<double,int>(1e100, 0); //чтобы этот же пассажир никогда не попадал в число своих соседей
         sort(dists.begin(), dists.end(), comparison);
         double radius = dists[K-1].first; // радиус окружности из которой берем соседей
